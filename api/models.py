@@ -9,21 +9,21 @@ class User(models.Model):
     nick_name = models.CharField(max_length=32, null=False)
     avatar_url = models.CharField(max_length=128, null=False)
     gender = models.IntegerField()
-    language = models.CharField(max_length=32)
-    country = models.CharField(max_length=32)
-    province = models.CharField(max_length=32)
-    city = models.CharField(max_length=32)
-    phone_number = models.CharField(max_length=32, default="")
+    language = models.CharField(max_length=32,null=True)
+    country = models.CharField(max_length=32,null=True)
+    province = models.CharField(max_length=32,null=True)
+    city = models.CharField(max_length=32,null=True)
+    phone_number = models.CharField(max_length=32,unique=True,null=True)
 
 
 class Book(models.Model):
     title = models.CharField(max_length=32)
     author = models.CharField(max_length=32)
-    translator = models.CharField(max_length=64)
-    publisher = models.CharField(max_length=32)
+    translator = models.CharField(max_length=64,null=True)
+    publisher = models.CharField(max_length=32,null=True)
     img = models.CharField(max_length=128)
-    rate = models.FloatField(max_length=0)
-    isbn = models.CharField(max_length=128, null=False)
+    rate = models.FloatField(max_length=0,null=True)
+    isbn = models.CharField(max_length=128, null=False,unique=True)
 
 
 class BookUser(models.Model):

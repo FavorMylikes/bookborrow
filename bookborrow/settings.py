@@ -45,7 +45,7 @@ MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    # 'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
@@ -128,6 +128,11 @@ DJANGO_ROOT = os.path.join(BASE_DIR, 'log')
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
+    'formatters': {
+        'standard': {
+            'format': '%(levelname)s %(asctime)s %(pathname)s %(filename)s %(module)s %(funcName)s %(lineno)d: %(message)s'
+        }, # INFO 2016-09-03 16:25:20,067 /home/ubuntu/mysite/views.py views.py views get 29: some info...
+    },
     'handlers': {
         'file': {
             'level': 'DEBUG',
@@ -136,10 +141,15 @@ LOGGING = {
             'maxBytes': 1024 * 1024 * 15,  # 15MB
             'backupCount': 10,
         },
+        'console': {
+            'level': 'INFO',
+            'class': 'logging.StreamHandler',
+            'formatter': 'standard'
+        },
     },
     'loggers': {
         '': {
-            'handlers': ['file'],
+            'handlers': ['file','console'],
             'level': 'DEBUG',
             'propagate': True,
         },
