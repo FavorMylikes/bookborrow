@@ -26,7 +26,7 @@ SECRET_KEY = '$s!(c2c!(=0xi5qfd33+4r-9u$#ww)n&e$6h1byo2mc8_&5jxo'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['favormylikes.com']
+ALLOWED_HOSTS = ['favormylikes.com','127.0.0.1','*','192.168.3.1']
 
 # Application definition
 

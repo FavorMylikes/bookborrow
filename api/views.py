@@ -15,7 +15,7 @@ logger = logging.getLogger(__name__)
 
 def isbn(request):
     res = dict(title="没找到", author="沃·夏靴德", publisher="找不到出版社",
-               img="%(protocol)s://favormylikes/bookborrow/static/image/cover_404.gif" % dict(
+               img="%(protocol)s://favormylikes.com/bookborrow/static/image/cover_404.gif" % dict(
                    protocol=settings.WEB_PROTOCOL),
                )
     try:
@@ -23,7 +23,7 @@ def isbn(request):
             isbn = request.GET["isbn"]
             book = Book.objects.filter(isbn=isbn)
             if len(book) != 0:  # 如果在库里则返回库里的数据
-                res.update(model_to_dict(book))
+                res.update(model_to_dict(book[0]))
             else:  # 否则去豆瓣请求数据
                 res.update(get_book_douban(isbn))
                 Book.objects.create(**res)
