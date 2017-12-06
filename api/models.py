@@ -27,15 +27,15 @@ class Book(models.Model):
 
 
 class BookUser(models.Model):
-    user_id = models.OneToOneField(User, on_delete=models.CASCADE, unique=True)
-    book_id = models.OneToOneField(Book, on_delete=models.CASCADE, unique=True)
-    book_isbn = models.CharField(max_length=64, null=False)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, unique=True)
+    book = models.OneToOneField(Book, on_delete=models.CASCADE, unique=True)
+    isbn = models.CharField(max_length=64, null=False)
     latitude = models.FloatField(max_length=0, null=False)
     longitude = models.FloatField(max_length=0, null=False)
     altitude = models.IntegerField(null=False)
     vertical_accuracy = models.IntegerField(null=False)
     horizontal_accuracy = models.IntegerField(null=False)
     accuracy = models.IntegerField(null=False)
-    create_datetime = models.DateTimeField(default="CURRENT_TIMESTAMP", null=False)
+    create_datetime = models.DateTimeField(auto_created=True,blank=True,null=True)
 
 

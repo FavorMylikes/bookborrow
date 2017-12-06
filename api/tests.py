@@ -18,7 +18,30 @@ class ModelTest(TestCase):
         data["country"] = request.GET.get("country", "--NULL--")
         data["province"] = request.GET.get("province", "--NULL--")
         data["city"] = request.GET.get("city", "--NULL--")
-        User.objects.create(**data)
+        user=User.objects.create(**data)
+
+        data=dict()
+        data["title"] = "title"
+        data["author"] = "author"
+        data["translator"] = "translator"
+        data["publisher"] = "publisher"
+        data["img"] = "img"
+        data["rate"] = 3.1
+        data["isbn"] = "isbn"
+
+        book=Book.objects.create(**data)
+        data = dict()
+        data["isbn"] = "isbn"
+        data["latitude"] = 3.1
+        data["longitude"] = 3.2
+        data["altitude"] = 4
+        data["vertical_accuracy"] = 0
+        data["horizontal_accuracy"] = 0
+        data["accuracy"] = 0
+
+        BookUser.objects.create(user=user,book=book,**data)
+
 
     def test_models(self):
+        print(BookUser.objects.get(isbn="isbn").altitude)
         print(User.objects.get(nick_name="--NULL--").id)
