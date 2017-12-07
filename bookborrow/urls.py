@@ -14,6 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
 from django.conf.urls import url
+from django.conf.urls.static import static
 from api.views import *
 
 
@@ -21,5 +22,5 @@ urlpatterns = [
     url(r'^api/search', isbn),
     url(r'^api/add', add),
     url(r'^api/append', add)
-]
+]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)#静态图片
 
