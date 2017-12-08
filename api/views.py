@@ -66,7 +66,7 @@ def add(request):
             data["isbn"] = isbn
             data["latitude"] = request.GET.get("latitude", 0)
             data["longitude"] = request.GET.get("longitude", 0)
-            data["altitude"] = request.GET.get("altitude", 0)
+            data["altitude"] = request.GET.get("altitude", -1)
             data["vertical_accuracy"] = request.GET.get("vertical_accuracy", -1)
             data["horizontal_accuracy"] = request.GET.get("horizontal_accuracy", -1)
             data["accuracy"] = request.GET.get("accuracy", -1)

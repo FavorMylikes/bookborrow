@@ -3,7 +3,7 @@
 # @author : FavorMylikes<l786112323@gmail.com>
 # @since : 2017/12/6 0:05
 from django.db import models
-
+import django.utils.timezone as timezone
 
 class User(models.Model):
     nick_name = models.CharField(max_length=32, null=False)
@@ -27,8 +27,8 @@ class Book(models.Model):
 
 
 class BookUser(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, unique=True)
-    book = models.OneToOneField(Book, on_delete=models.CASCADE, unique=True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    book = models.OneToOneField(Book, on_delete=models.CASCADE)
     isbn = models.CharField(max_length=64, null=False)
     latitude = models.FloatField(max_length=0, null=False)
     longitude = models.FloatField(max_length=0, null=False)
@@ -36,6 +36,9 @@ class BookUser(models.Model):
     vertical_accuracy = models.IntegerField(null=False)
     horizontal_accuracy = models.IntegerField(null=False)
     accuracy = models.IntegerField(null=False)
-    create_datetime = models.DateTimeField(auto_created=True,blank=True,null=True)
+    create_datetime = models.DateTimeField(default=timezone.now)
+    class Meta:
+        unique_together = ('book', 'user',)
+
 
 
