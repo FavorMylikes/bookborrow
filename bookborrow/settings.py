@@ -142,6 +142,7 @@ LOGGING = {
             'filename': os.path.join(DJANGO_ROOT, 'recorder.log'),
             'maxBytes': 1024 * 1024 * 15,  # 15MB
             'backupCount': 10,
+            'formatter': 'standard',
         },
         'console': {
             'level': 'INFO',
