@@ -143,6 +143,7 @@ LOGGING = {
             'maxBytes': 1024 * 1024 * 15,  # 15MB
             'backupCount': 10,
             'formatter': 'standard',
+            'encoding': 'utf8',
         },
         'console': {
             'level': 'INFO',
