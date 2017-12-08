@@ -36,7 +36,7 @@ class BookUser(models.Model):
     vertical_accuracy = models.IntegerField(null=False)
     horizontal_accuracy = models.IntegerField(null=False)
     accuracy = models.IntegerField(null=False)
-    create_datetime = models.DateTimeField(default=timezone.now)
+    create_datetime = models.DateTimeField(default=timezone.now,null=True)
     class Meta:
         unique_together = ('book', 'user',)
 
