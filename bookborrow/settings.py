@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 import os
 # 生产环境和开发环境分离
 from .conf.local import *
+from .conf.deploy import *
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -24,7 +25,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '$s!(c2c!(=0xi5qfd33+4r-9u$#ww)n&e$6h1byo2mc8_&5jxo'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['favormylikes.com','127.0.0.1','*','192.168.3.1']
 
@@ -124,6 +125,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
 STATIC_URL = '/static/'
+
 DJANGO_ROOT = os.path.join(BASE_DIR, 'log')
 LOGGING = {
     'version': 1,
@@ -148,7 +150,12 @@ LOGGING = {
         },
     },
     'loggers': {
-        '': {
+        'django': {
+            'handlers': ['file','console'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+        'api': {
             'handlers': ['file','console'],
             'level': 'DEBUG',
             'propagate': True,

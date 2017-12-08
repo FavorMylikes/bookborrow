@@ -20,6 +20,7 @@ def isbn(request):
                )
     try:
         if request.method == 'GET':
+            logger.info(request.GET)
             isbn = request.GET["isbn"]
             book = Book.objects.filter(isbn=isbn)
             if len(book) != 0:  # 如果在库里则返回库里的数据
