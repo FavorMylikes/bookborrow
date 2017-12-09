@@ -25,7 +25,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '$s!(c2c!(=0xi5qfd33+4r-9u$#ww)n&e$6h1byo2mc8_&5jxo'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['favormylikes.com','127.0.0.1','*','192.168.3.1']
 
@@ -83,10 +83,10 @@ DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.mysql",
         "NAME": "django_bookborrow",
-        "USER": "root",
-        "PASSWORD": "minefield32",
-        "HOST": "120.27.96.175",
-        "PORT": "3306"
+        "USER": "username",
+        "PASSWORD": "password",
+        "HOST": "xxx.xxx.xxx.xxx",
+        "PORT": "xxxx"
     }
 }
 
@@ -132,7 +132,7 @@ LOGGING = {
     'disable_existing_loggers': False,
     'formatters': {
         'standard': {
-            'format': '%(levelname)s %(asctime)s %(pathname)s %(filename)s %(module)s %(funcName)s %(lineno)d: %(message)s'
+            'format': '%(asctime)s [%(levelname)s] %(funcName)s %(lineno)d: %(message)s'
         }, # INFO 2016-09-03 16:25:20,067 /home/ubuntu/mysite/views.py views.py views get 29: some info...
     },
     'handlers': {
@@ -146,21 +146,26 @@ LOGGING = {
             'encoding': 'utf8',
         },
         'console': {
-            'level': 'INFO',
+            'level': 'DEBUG',
             'class': 'logging.StreamHandler',
-            'formatter': 'standard'
+            'formatter': 'standard',
         },
     },
     'loggers': {
-        'django': {
+        'django.db.backends': {
             'handlers': ['file','console'],
             'level': 'DEBUG',
-            'propagate': True,
+            'propagate': False,
         },
         'api': {
             'handlers': ['file','console'],
             'level': 'DEBUG',
-            'propagate': True,
+            'propagate': False,
+        },
+        '': {
+            'handlers': ['file','console'],
+            'level': 'DEBUG',
+            'propagate': False,
         },
     },
 }

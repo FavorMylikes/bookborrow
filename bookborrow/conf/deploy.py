@@ -4,3 +4,4 @@
 # @since : 2017/12/8 0:27
 
 STATIC_ROOT = '/opt/mylikes/bookborrow/static'
+
