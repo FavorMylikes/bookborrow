@@ -168,6 +168,11 @@ LOGGING = {
         },
     },
 }
+
+PROTOCOL = "https"
+HOST = "host"
+PROJECT = "project"
+
 # 生产环境和开发环境分离
 from .conf.local import *
 from .conf.deploy import *
