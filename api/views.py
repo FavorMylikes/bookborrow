@@ -3,11 +3,11 @@
 # @author : FavorMylikes<l786112323@gmail.com>
 # @since : 2017/11/26 1:46
 
-import requests, json, logging, traceback
+import json, logging, traceback
 from django.http import HttpResponse,HttpResponseBadRequest
 from django.contrib.staticfiles.templatetags.staticfiles import static
 from api.models import *
-from bookborrow.util import url
+from util import url
 from django.forms.models import model_to_dict
 from api.services import get_book_douban
 logger = logging.getLogger(__name__)
