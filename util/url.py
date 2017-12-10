@@ -5,4 +5,4 @@
 
 from django.conf import settings
 def root():
-    return "%(protocol)s://%(host)/%(app)/" % settings.WEB_CONFIG
+    return "%(protocol)s://%(host)s/%(app)s/" % settings.WEB_CONFIG
