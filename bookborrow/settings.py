@@ -176,6 +176,6 @@ from .conf.deploy import *
 WEB_CONFIG={
     "protocol":PROTOCOL,
     "host":HOST,
-    "PROJECT":PROJECT,
+    "app":PROJECT,
 }
 
