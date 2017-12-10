@@ -25,7 +25,8 @@ def isbn(request):
                 res.update(model_to_dict(book[0]))
             else:  # 否则去豆瓣请求数据
                 res.update(get_book_douban(isbn))
-                Book.objects.create(**res)
+                if res["title"] != "没找到":
+                    Book.objects.create(**res)
             res["nick_name"] = []
             for row in BookUser.objects.filter(isbn=isbn):
                 res["nick_name"].append(row.user.nick_name)
