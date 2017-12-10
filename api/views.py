@@ -15,7 +15,7 @@ logger = logging.getLogger(__name__)
 
 def isbn(request):
     res = dict(title="没找到", author="沃·夏靴德", publisher="找不到出版社",
-               img=url.root()+static("image/cover_404.gif")),
+               img=url.root()+static("image/cover_404.gif"),rate='0')
     try:
         if request.method == 'GET':
             logger.info(request.GET)
