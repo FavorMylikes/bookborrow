@@ -22,8 +22,6 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '$s!(c2c!(=0xi5qfd33+4r-9u$#ww)n&e$6h1byo2mc8_&5jxo'
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
 
 ALLOWED_HOSTS = ['favormylikes.com','127.0.0.1','*','192.168.3.1']
 
@@ -111,7 +109,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'UTC+8'
 
 USE_I18N = True
 
@@ -124,6 +122,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
 DJANGO_ROOT = os.path.join(BASE_DIR, 'log')
 LOGGING = {
     'version': 1,
@@ -133,6 +133,7 @@ LOGGING = {
             'format': '%(asctime)s [%(levelname)s] %(funcName)s %(lineno)d: %(message)s'
         }, # INFO 2016-09-03 16:25:20,067 /home/ubuntu/mysite/views.py views.py views get 29: some info...
     },
+
     'handlers': {
         'file': {
             'level': 'DEBUG',
@@ -167,8 +168,14 @@ LOGGING = {
         },
     },
 }
-
-
 # 生产环境和开发环境分离
 from .conf.local import *
 from .conf.deploy import *
+
+# web config
+WEB_CONFIG={
+    "protocol":PROTOCOL,
+    "host":HOST,
+    "PROJECT":PROJECT,
+}
+

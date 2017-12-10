@@ -5,9 +5,9 @@
 
 import requests, json, logging, traceback
 from django.http import HttpResponse,HttpResponseBadRequest
-from api.db import *
+from django.contrib.staticfiles.templatetags.staticfiles import static
 from api.models import *
-from django.conf import settings
+from bookborrow.util import url
 from django.forms.models import model_to_dict
 from api.services import get_book_douban
 logger = logging.getLogger(__name__)
@@ -15,9 +15,7 @@ logger = logging.getLogger(__name__)
 
 def isbn(request):
     res = dict(title="没找到", author="沃·夏靴德", publisher="找不到出版社",
-               img="%(protocol)s://favormylikes.com/bookborrow/static/image/cover_404.gif" % dict(
-                   protocol=settings.WEB_PROTOCOL),
-               )
+               img=url.root()+static("image/cover_404.gif")),
     try:
         if request.method == 'GET':
             logger.info(request.GET)

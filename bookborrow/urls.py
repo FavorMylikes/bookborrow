@@ -22,5 +22,5 @@ urlpatterns = [
     url(r'^api/search', isbn),
     url(r'^api/add', add),
     url(r'^api/append', add)
-]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)#静态图片
+]
 
