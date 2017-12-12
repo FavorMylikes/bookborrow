@@ -2,9 +2,10 @@
 # @desc Created by FavorTGD.
 # @author : FavorMylikes<l786112323@gmail.com>
 # @since : 2017/12/7 1:10
-import requests, json
+import requests, json, logging
 
 
+logger = logging.getLogger(__name__)
 def get_book_douban(isbn):
     res = dict()
     try:
@@ -19,6 +20,6 @@ def get_book_douban(isbn):
             "small"]
         res["rate"] = context["rating"]["average"]
         res["isbn"] = isbn
-    except:
-        pass
+    except Exception as e :
+        logger.error(e)
     return res

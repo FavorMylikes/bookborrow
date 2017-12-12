@@ -14,6 +14,7 @@ class User(models.Model):
     province = models.CharField(max_length=32,null=True)
     city = models.CharField(max_length=32,null=True)
     phone_number = models.CharField(max_length=32,unique=True,null=True)
+    create_datetime = models.DateTimeField(default=timezone.now, null=True)
 
 
 class Book(models.Model):
@@ -24,6 +25,7 @@ class Book(models.Model):
     img = models.CharField(max_length=128)
     rate = models.FloatField(max_length=0,null=True)
     isbn = models.CharField(max_length=128, null=False,unique=True)
+    create_datetime = models.DateTimeField(default=timezone.now, null=True)
 
 
 class BookUser(models.Model):
