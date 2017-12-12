@@ -23,7 +23,7 @@ def isbn(request):
             isbn = request.GET["isbn"]
             book = Book.objects.filter(isbn=isbn)
             if len(book) != 0:  # 如果在库里则返回库里的数据
-                res.update(model_to_dict(book[0]))
+                res.update(model_to_dict(book[0],exclude='create_datetime'))
             else:  # 否则去豆瓣请求数据
                 res.update(get_book_douban(isbn))
                 if res["title"] != "没找到":
