@@ -4,8 +4,9 @@
 # @since : 2017/12/7 1:10
 import requests, json, logging
 
-
 logger = logging.getLogger(__name__)
+
+
 def get_book_douban(isbn):
     res = dict()
     try:
@@ -20,6 +21,6 @@ def get_book_douban(isbn):
             "small"]
         res["rate"] = context["rating"]["average"]
         res["isbn"] = isbn
-    except Exception as e :
-        logger.error(e)
+    except Exception as e:
+        logger.exception(e)
     return res
