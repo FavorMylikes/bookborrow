@@ -6,6 +6,8 @@ import requests, json, logging
 
 logger = logging.getLogger(__name__)
 
+from django.conf import settings
+
 
 def get_book_douban(isbn):
     res = dict()
@@ -23,4 +25,37 @@ def get_book_douban(isbn):
         res["isbn"] = isbn
     except Exception as e:
         logger.exception(e)
+    return res
+
+
+def get_openid(code):
+    try:
+        app_id = settings.WX_APP_ID
+        secret_id = settings.WX_SECRET_ID
+        data = {
+            "app_id": app_id,
+            "secret_id": secret_id,
+            "code": code
+        }
+        url = """https://api.weixin.qq.com/sns/jscode2session?appid=%(app_id)s&secret=%(secret_id)s&js_code=%(code)s&grant_type=authorization_code""" % data
+        context = requests.get(url).text
+        context = json.loads(context)
+        return context
+    except Exception as e:
+        logger.exception(e)
+
+
+# 详见文档
+# https://mp.weixin.qq.com/debug/wxadoc/dev/api/open.html
+# https://mp.weixin.qq.com/debug/wxadoc/dev/api/signature.html
+def decrypt(code, encrypted_data, iv, signature, raw_data):
+    from api.WXBizDataCrypt import WXBizDataCrypt
+    from hashlib import sha1
+    app_id = settings.WX_APP_ID
+    code = get_openid(code)
+    session_key = code["session_key"]
+    pc = WXBizDataCrypt(app_id, session_key)
+    res = pc.decrypt(encrypted_data, iv)
+    res["check"] = sha1((raw_data + session_key).encode('utf-8')).hexdigest() == signature
+    logger.info(res)
     return res

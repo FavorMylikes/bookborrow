@@ -4,18 +4,19 @@
 # @since : 2017/11/26 1:46
 
 import json, logging, traceback
-from django.http import HttpResponse,HttpResponseBadRequest
+from django.http import HttpResponse, HttpResponseBadRequest
 from django.contrib.staticfiles.templatetags.staticfiles import static
 from api.models import *
 from util import url
 from django.forms.models import model_to_dict
-from api.services import get_book_douban
+from api.services import *
+
 logger = logging.getLogger(__name__)
 
 
 def isbn(request):
     res = dict(title="没找到", author="沃·夏靴德", publisher="找不到出版社",
-               img=url.root()+static("image/cover_404.gif"),rate='0',
+               img=url.root() + static("image/cover_404.gif"), rate='0',
                translator='')
     try:
         if request.method == 'GET':
@@ -23,7 +24,7 @@ def isbn(request):
             isbn = request.GET["isbn"]
             book = Book.objects.filter(isbn=isbn)
             if len(book) != 0:  # 如果在库里则返回库里的数据
-                res.update(model_to_dict(book[0],exclude='create_datetime'))
+                res.update(model_to_dict(book[0], exclude='create_datetime'))
             else:  # 否则去豆瓣请求数据
                 res.update(get_book_douban(isbn))
                 if res["title"] != "没找到":
@@ -54,7 +55,7 @@ def add(request):
                 user = User.objects.get(nick_name=data["nick_name"])
             except User.DoesNotExist:
                 user = User.objects.create(**data)
-            isbn = request.GET.get("isbn","--NULL--")
+            isbn = request.GET.get("isbn", "--NULL--")
             try:
                 book = Book.objects.get(isbn=isbn)
             except Book.DoesNotExist:
@@ -72,13 +73,30 @@ def add(request):
             data["accuracy"] = request.GET.get("accuracy", -1)
 
             BookUser.objects.create(**data)
-            res["success"]=1
+            res["success"] = 1
         except Exception as e:
-            logger.error("".join(traceback.format_tb(e.__traceback__)))
-            logger.error(e.args)
+            logger.exception(e)
             res["success"] = 0
             return HttpResponseBadRequest()
     return HttpResponse(json.dumps(res))
+
+
+def check(request):
+    res = {"success": 0}
+    if request.method == "GET":
+        logger.info(request.GET)
+        try:
+            code = request.GET["code"]
+            encrypted_data = request.GET["encryptedData"]
+            raw_data = request.GET["rawData"]
+            iv = request.GET["iv"]
+            signature = request.GET["signature"]
+            res = decrypt(code, encrypted_data, iv, signature,raw_data)
+            res["success"] = 1
+        except Exception as e:
+            logger.exception(e)
+            return HttpResponseBadRequest()
+    HttpResponse(json.dumps(res))
 
 
 if __name__ == '__main__':

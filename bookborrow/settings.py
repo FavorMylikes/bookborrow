@@ -34,8 +34,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'api'
+    'api',
 ]
+
+TEST_WITHOUT_MIGRATIONS_COMMAND = 'django_nose.management.commands.test.Command'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -173,10 +175,13 @@ PROTOCOL = "https"
 HOST = "host"
 PROJECT = "project"
 
+WX_APP_ID = "wx_app_id"
+WX_SECRET_ID = "wx_secret_id"
+
 # 生产环境和开发环境分离
 from .conf.local import *
 from .conf.deploy import *
-
+from .conf.test import *
 # web config
 WEB_CONFIG={
     "protocol":PROTOCOL,
