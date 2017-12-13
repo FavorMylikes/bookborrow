@@ -96,7 +96,7 @@ def check(request):
         except Exception as e:
             logger.exception(e)
             return HttpResponseBadRequest()
-    HttpResponse(json.dumps(res))
+    return HttpResponse(json.dumps(res))
 
 
 if __name__ == '__main__':
