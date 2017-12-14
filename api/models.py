@@ -15,7 +15,7 @@ class User(models.Model):
     city = models.CharField(max_length=32,null=True)
     phone_number = models.CharField(max_length=32,unique=True,null=True)
     create_datetime = models.DateTimeField(default=timezone.now, null=True)
-    open_id = models.IntegerField(max_length=28, null=True)
+    open_id = models.CharField(max_length=28, null=True)
 
 
 class Book(models.Model):
