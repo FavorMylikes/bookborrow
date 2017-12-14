@@ -58,7 +58,7 @@ def decrypt(code, encrypted_data, iv, signature, raw_data):
     data = pc.decrypt(encrypted_data, iv)
     data["check"] = sha1((raw_data + session_key).encode('utf-8')).hexdigest() == signature
     res=[]
-    res["nick_name"] = data.get("nickame", None)
+    res["nick_name"] = data.get("nickName", None)
     res["avatar_url"] = data.get("avatarUrl", None)
     res["gender"] = data.get("gender", None)
     res["language"] = data.get("language", None)
