@@ -55,7 +55,16 @@ def decrypt(code, encrypted_data, iv, signature, raw_data):
     code = get_openid(code)
     session_key = code["session_key"]
     pc = WXBizDataCrypt(app_id, session_key)
-    res = pc.decrypt(encrypted_data, iv)
-    res["check"] = sha1((raw_data + session_key).encode('utf-8')).hexdigest() == signature
+    data = pc.decrypt(encrypted_data, iv)
+    data["check"] = sha1((raw_data + session_key).encode('utf-8')).hexdigest() == signature
+    res=[]
+    res["nick_name"] = data.get("nick_name", None)
+    res["avatar_url"] = data.get("avatar_url", None)
+    res["gender"] = data.get("gender", None)
+    res["language"] = data.get("language", None)
+    res["country"] = data.get("country", None)
+    res["province"] = data.get("province", None)
+    res["city"] = data.get("city", None)
+    res["open_id"] = data.get("open_id", None)
     logger.info(res)
     return res

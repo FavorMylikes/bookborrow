@@ -102,7 +102,7 @@ def check(request):
                     user.open_id=res["open_id"]
                     user.save()
             except User.DoesNotExist:
-                user = User.objects.create(**res)
+                User.objects.create(**res)
             res.clear()
             res["success"] = 1
         except Exception as e:
