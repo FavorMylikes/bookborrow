@@ -44,18 +44,22 @@ def add(request):
         logger.info(request.GET)
         try:
             data = dict()
-            data["nick_name"] = request.GET.get("nick_name", "--NULL--")
-            data["avatar_url"] = request.GET.get("avatar_url", "--NULL--")
-            data["gender"] = request.GET.get("gender", "--NULL--")
-            data["language"] = request.GET.get("language", "--NULL--")
-            data["country"] = request.GET.get("country", "--NULL--")
-            data["province"] = request.GET.get("province", "--NULL--")
-            data["city"] = request.GET.get("city", "--NULL--")
+            data["nick_name"] = request.GET.get("nick_name", None)
+            data["avatar_url"] = request.GET.get("avatar_url", None)
+            data["gender"] = request.GET.get("gender", None)
+            data["language"] = request.GET.get("language", None)
+            data["country"] = request.GET.get("country", None)
+            data["province"] = request.GET.get("province", None)
+            data["city"] = request.GET.get("city", None)
+            data["open_id"] = request.GET.get("open_id", None)
             try:
                 user = User.objects.get(nick_name=data["nick_name"])
+                if user.open_id is None or user.open_id == "":
+                    user.open_id=data["open_id"]
+                    user.save()
             except User.DoesNotExist:
                 user = User.objects.create(**data)
-            isbn = request.GET.get("isbn", "--NULL--")
+            isbn = request.GET.get("isbn", None)
             try:
                 book = Book.objects.get(isbn=isbn)
             except Book.DoesNotExist:
