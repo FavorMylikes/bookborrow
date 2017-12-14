@@ -96,6 +96,14 @@ def check(request):
             iv = request.GET["iv"]
             signature = request.GET["signature"]
             res = decrypt(code, encrypted_data, iv, signature,raw_data)
+            try:
+                user = User.objects.get(nick_name=res["nick_name"])
+                if user.open_id is None or user.open_id == "":
+                    user.open_id=res["open_id"]
+                    user.save()
+            except User.DoesNotExist:
+                user = User.objects.create(**res)
+            res.clear()
             res["success"] = 1
         except Exception as e:
             logger.exception(e)
