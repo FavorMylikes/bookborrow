@@ -57,7 +57,7 @@ def decrypt(code, encrypted_data, iv, signature, raw_data):
     pc = WXBizDataCrypt(app_id, session_key)
     data = pc.decrypt(encrypted_data, iv)
     data["check"] = sha1((raw_data + session_key).encode('utf-8')).hexdigest() == signature
-    res=[]
+    res = dict()
     res["nick_name"] = data.get("nickName", None)
     res["avatar_url"] = data.get("avatarUrl", None)
     res["gender"] = data.get("gender", None)
