@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '$s!(c2c!(=0xi5qfd33+4r-9u$#ww)n&e$6h1byo2mc8_&5jxo'
 
 
-ALLOWED_HOSTS = ['favormylikes.com','127.0.0.1','*','192.168.3.1']
+ALLOWED_HOSTS = ['127.0.0.1','*','192.168.3.1']
 
 # Application definition
 
@@ -117,7 +117,7 @@ USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = True
+USE_TZ = False
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
@@ -175,8 +175,14 @@ PROTOCOL = "https"
 HOST = "host"
 PROJECT = "project"
 
+#Weixin
 WX_APP_ID = "wx_app_id"
 WX_SECRET_ID = "wx_secret_id"
+
+#Session
+SESSION_COOKIE_AGE=60*30 # 30分钟
+SESSION_SAVE_EVERY_REQUEST = True
+# SESSION_COOKIE_DOMAIN = ".example.com"
 
 # 生产环境和开发环境分离
 from .conf.local import *
@@ -188,4 +194,3 @@ WEB_CONFIG={
     "host":HOST,
     "app":PROJECT,
 }
-

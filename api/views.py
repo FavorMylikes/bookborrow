@@ -14,6 +14,7 @@ from api.services import *
 logger = logging.getLogger(__name__)
 
 
+# 根据isbn查找书籍信息，不应当依赖于用户，独立于用户系统
 def isbn(request):
     res = dict(title="没找到", author="沃·夏靴德", publisher="找不到出版社",
                img=url.root() + static("image/cover_404.gif"), rate='0',
@@ -38,27 +39,14 @@ def isbn(request):
     return HttpResponse(json.dumps(res))
 
 
+# 添加书籍 用户 和关系列表，应当依赖于用户，即，用户不应当每次都提交个人信息，而应当以opneid为主要提交内容
 def add(request):
     res = dict(success=0)
     if request.method == 'GET':
         logger.info(request.GET)
         try:
             data = dict()
-            data["nick_name"] = request.GET.get("nick_name", None)
-            data["avatar_url"] = request.GET.get("avatar_url", None)
-            data["gender"] = request.GET.get("gender", None)
-            data["language"] = request.GET.get("language", None)
-            data["country"] = request.GET.get("country", None)
-            data["province"] = request.GET.get("province", None)
-            data["city"] = request.GET.get("city", None)
-            data["open_id"] = request.GET.get("open_id", None)
-            try:
-                user = User.objects.get(nick_name=data["nick_name"])
-                if user.open_id is None or user.open_id == "":
-                    user.open_id=data["open_id"]
-                    user.save()
-            except User.DoesNotExist:
-                user = User.objects.create(**data)
+            user = User.objects.get(id=request.session["user_id"])
             isbn = request.GET.get("isbn", None)
             try:
                 book = Book.objects.get(isbn=isbn)
@@ -95,14 +83,15 @@ def check(request):
             raw_data = request.GET["rawData"]
             iv = request.GET["iv"]
             signature = request.GET["signature"]
-            res = decrypt(code, encrypted_data, iv, signature,raw_data)
+            res = decrypt(code, encrypted_data, iv, signature, raw_data)
             try:
                 user = User.objects.get(nick_name=res["nick_name"])
                 if user.open_id is None or user.open_id == "":
-                    user.open_id=res["open_id"]
+                    user.open_id = res["open_id"]
                     user.save()
             except User.DoesNotExist:
-                User.objects.create(**res)
+                user = User.objects.create(**res)
+            request.session["user_id"] = user.id
             res.clear()
             res["success"] = 1
         except Exception as e:

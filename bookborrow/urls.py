@@ -21,6 +21,6 @@ urlpatterns = [
     url(r'^api/search', isbn),
     url(r'^api/add', add),
     url(r'^api/append', add),
-    url(r'^api/check', check)
+    url(r'^api/check', check),
 ]
 
