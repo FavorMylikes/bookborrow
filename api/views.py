@@ -100,5 +100,15 @@ def check(request):
     return HttpResponse(json.dumps(res))
 
 
+def session_test(request):
+    import random
+    if request.session.has_key("user_id"):
+        logger.info("user is %s" % request.session["user_id"])
+    else:
+        request.session["user_id"] = random.randint(0,20)
+        logger.info("set user %s" % request.session["user_id"])
+    return HttpResponse(request.session["user_id"])
+
+
 if __name__ == '__main__':
     print(__name__)

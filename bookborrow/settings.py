@@ -180,13 +180,13 @@ WX_APP_ID = "wx_app_id"
 WX_SECRET_ID = "wx_secret_id"
 
 #Session
-SESSION_COOKIE_AGE=60*30 # 30分钟
+SESSION_COOKIE_AGE=30*60 # 30分钟
 SESSION_SAVE_EVERY_REQUEST = True
 # SESSION_COOKIE_DOMAIN = ".example.com"
 
 # 生产环境和开发环境分离
-from .conf.local import *
 from .conf.deploy import *
+from .conf.local import *
 from .conf.test import *
 # web config
 WEB_CONFIG={
