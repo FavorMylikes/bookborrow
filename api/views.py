@@ -18,7 +18,7 @@ logger = logging.getLogger(__name__)
 def isbn(request):
     res = dict(title="没找到", author="沃·夏靴德", publisher="找不到出版社",
                img=url.root() + static("image/cover_404.gif"), rate='0',
-               translator='')
+               translator='',users=[])
     try:
         if request.method == 'GET':
             logger.info(request.GET)
@@ -30,11 +30,9 @@ def isbn(request):
                 res.update(get_book_douban(isbn))
                 if res["title"] != "没找到":
                     Book.objects.create(**res)
-            res["user"] = []
             for row in BookUser.objects.filter(isbn=isbn):
-                res["user"].append({"nickName": row.user.nick_name, "avatarUrl": row.avatar_url})
+                res["users"].append({"nickName": row.user.nick_name, "avatarUrl": row.user.avatar_url})
     except Exception as e:
-        res["nick_name"] = []
         logger.error(e)
     return HttpResponse(json.dumps(res))
 
