@@ -32,7 +32,7 @@ def isbn(request):
                     Book.objects.create(**res)
             res["user"] = []
             for row in BookUser.objects.filter(isbn=isbn):
-                res["user"].append({"name": row.user.nick_name, "avatar": row.avatar_url})
+                res["user"].append({"nickName": row.user.nick_name, "avatarUrl": row.avatar_url})
     except Exception as e:
         res["nick_name"] = []
         logger.error(e)
