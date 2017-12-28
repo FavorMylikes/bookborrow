@@ -30,9 +30,9 @@ def isbn(request):
                 res.update(get_book_douban(isbn))
                 if res["title"] != "没找到":
                     Book.objects.create(**res)
-            res["nick_name"] = []
+            res["user"] = []
             for row in BookUser.objects.filter(isbn=isbn):
-                res["nick_name"].append(row.user.nick_name)
+                res["user"].append({"name": row.user.nick_name, "avatar": row.avatar_url})
     except Exception as e:
         res["nick_name"] = []
         logger.error(e)
@@ -105,7 +105,7 @@ def session_test(request):
     if request.session.has_key("user_id"):
         logger.info("user is %s" % request.session["user_id"])
     else:
-        request.session["user_id"] = random.randint(0,20)
+        request.session["user_id"] = random.randint(0, 20)
         logger.info("set user %s" % request.session["user_id"])
     return HttpResponse(request.session["user_id"])
 
