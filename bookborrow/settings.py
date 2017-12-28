@@ -135,16 +135,24 @@ LOGGING = {
             'format': '%(asctime)s [%(levelname)s] %(funcName)s %(lineno)d: %(message)s'
         }, # INFO 2016-09-03 16:25:20,067 /home/ubuntu/mysite/views.py views.py views get 29: some info...
     },
-
     'handlers': {
         'file': {
             'level': 'DEBUG',
             'class': 'logging.handlers.RotatingFileHandler',
-            'filename': os.path.join(DJANGO_ROOT, 'recorder.log'),
+            'filename': os.path.join(DJANGO_ROOT, 'appNameDebug.log'),
             'maxBytes': 1024 * 1024 * 15,  # 15MB
             'backupCount': 10,
             'formatter': 'standard',
             'encoding': 'utf8',
+        },
+        'file_err': {
+            'level': 'ERROR',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': os.path.join(DJANGO_ROOT, 'appNmaeErr.log'),
+            'maxBytes': 1024 * 1024 * 15,  # 15MB
+            'backupCount': 10,
+            'formatter': 'standard',
+            'encoding': 'utf8'
         },
         'console': {
             'level': 'DEBUG',
@@ -154,17 +162,17 @@ LOGGING = {
     },
     'loggers': {
         'django.db.backends': {
-            'handlers': ['file','console'],
+            'handlers': ['file','file_err'],
             'level': 'DEBUG',
             'propagate': False,
         },
         'api': {
-            'handlers': ['file','console'],
+            'handlers': ['file','file_err'],
             'level': 'DEBUG',
             'propagate': False,
         },
         '': {
-            'handlers': ['file','console'],
+            'handlers': ['file','file_err','console'],
             'level': 'DEBUG',
             'propagate': False,
         },
