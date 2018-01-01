@@ -9,10 +9,23 @@ from django.contrib.staticfiles.templatetags.staticfiles import static
 from api.models import *
 from util import url
 from django.forms.models import model_to_dict
+from django.db.models import Sum
 from api.services import *
 
 logger = logging.getLogger(__name__)
 
+
+# user_info 返回一些用户阅读过的书籍数量，和赞同数量系统
+def userinfo(request):
+    if "user_id" not in request.session:
+        return HttpResponseBadRequest()
+    else:
+        res={}
+        user = User.objects.get(id=request.session["user_id"])
+        res["book_count"] = BookUser.objects.filter(user=user).count()
+        res["article_count"] = Article.objects.filter(user=user).count()
+        res["like_count"] = Article.objects.filter(user=user).aggregate(Sum("like_count"))
+        return HttpResponse(json.dumps(res))
 
 # 根据isbn查找书籍信息，不应当依赖于用户，独立于用户系统
 def isbn(request):
