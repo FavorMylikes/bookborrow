@@ -22,6 +22,7 @@ urlpatterns = [
     url(r'^api/add', add),
     url(r'^api/append', add),
     url(r'^api/check', check),
+    url(r'^api/userinfo', userinfo),
     url(r'^session', session_test)
 ]
 
