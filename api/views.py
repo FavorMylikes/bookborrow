@@ -24,7 +24,7 @@ def userinfo(request):
         user = User.objects.get(id=request.session["user_id"])
         res["book_count"] = BookUser.objects.filter(user=user).count()
         res["followee_count"] = FollowRelations.objects.filter(followee=user).count()
-        res["like_count"] = Article.objects.filter(user=user).aggregate(Sum("like_count"))
+        res["like_count"] = Article.objects.filter(user=user).aggregate(Sum("like_count"))["like_count__sum"] or 0
         return HttpResponse(json.dumps(res))
 
 # 根据isbn查找书籍信息，不应当依赖于用户，独立于用户系统
