@@ -23,7 +23,7 @@ def userinfo(request):
         res={}
         user = User.objects.get(id=request.session["user_id"])
         res["book_count"] = BookUser.objects.filter(user=user).count()
-        res["article_count"] = Article.objects.filter(user=user).count()
+        res["followee_count"] = FollowRelations.objects.filter(followee=user).count()
         res["like_count"] = Article.objects.filter(user=user).aggregate(Sum("like_count"))
         return HttpResponse(json.dumps(res))
 
