@@ -104,7 +104,10 @@ def check(request):
                 user = User.objects.create(**res)
             request.session["user_id"] = user.id
             res.clear()
-            res["success"] = 1
+            res["book_count"] = BookUser.objects.filter(user=user).count()
+            res["followee_count"] = FollowRelations.objects.filter(followee=user).count()
+            res["like_count"] = Article.objects.filter(user=user).aggregate(Sum("like_count"))["like_count__sum"] or 0
+            return HttpResponse(json.dumps(res))
         except Exception as e:
             logger.exception(e)
             return HttpResponseBadRequest()
