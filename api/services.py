@@ -53,6 +53,7 @@ def decrypt(code, encrypted_data, iv, signature, raw_data):
     from hashlib import sha1
     app_id = settings.WX_APP_ID
     code = get_openid(code)
+    logger.debug("get code from api.weixin:%s", code)
     session_key = code["session_key"]
     pc = WXBizDataCrypt(app_id, session_key)
     data = pc.decrypt(encrypted_data, iv)
